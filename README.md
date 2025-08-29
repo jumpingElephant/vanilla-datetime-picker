@@ -28,6 +28,7 @@ Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds. Includes 
 - `npm run build`
 - perform sanity checks
 - `npm version patch` or `npm version minor` or `npm version major`
+- `git push --follow-tags`
 
 ## License
 

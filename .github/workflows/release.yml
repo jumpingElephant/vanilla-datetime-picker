@@ -27,8 +27,6 @@ jobs:
             dist/index.esm.js
             dist/index.iife.min.js
             dist/style.css
-            dist/index.with-css.esm.js
-            dist/index.with-css.iife.min.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
