@@ -1,0 +1,61 @@
+name: Deploy Demo to GitHub Pages
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      # Assemble site/ with demo + dist
+      - name: Prepare site folder
+        run: |
+          rm -rf site
+          mkdir -p site
+          cp -r demo/* site/
+          # Copy build artifacts under site/dist
+          mkdir -p site/dist
+          cp -r dist/* site/dist/
+
+          # Fix demo's references from "../dist/..." to "dist/..."
+          # Only if your demo uses ../dist paths (common when demo lives in its own folder)
+          if grep -q "\.\./dist/" site/index.html; then
+            sed -i 's|\.\./dist/|dist/|g' site/index.html
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
