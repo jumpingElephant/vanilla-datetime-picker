@@ -1,0 +1,61 @@
+{
+  "name": "vanilla-datetime-picker",
+  "version": "0.1.0",
+  "description": "Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds.",
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jumpingElephant/vanilla-datetime-picker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jumpingElephant/vanilla-datetime-picker/issues"
+  },
+  "homepage": "https://github.com/jumpingElephant/vanilla-datetime-picker#readme",
+  "type": "module",
+  "sideEffects": [
+    "src/index-inject.js",
+    "src/style.css"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.iife.min.js",
+      "default": "./dist/index.iife.min.js"
+    },
+    "./style.css": "./dist/style.css",
+    "./with-css": {
+      "import": "./dist/index.with-css.esm.js",
+      "require": "./dist/index.with-css.iife.min.js",
+      "default": "./dist/index.with-css.iife.min.js"
+    }
+  },
+  "module": "dist/index.esm.js",
+  "unpkg": "dist/index.iife.min.js",
+  "jsdelivr": "dist/index.iife.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "node scripts/build.mjs",
+    "dev:esm": "esbuild src/index.js --bundle --format=esm --outfile=dist/index.esm.js --sourcemap --watch",
+    "dev:iife": "esbuild src/index.js --bundle --format=iife --global-name=DateTimePicker --outfile=dist/index.iife.js --sourcemap --watch",
+    "lint": "eslint src",
+    "release:tag": "git tag v$npm_package_version && git push --tags"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.0",
+    "eslint": "^9.10.0",
+    "rimraf": "^5.0.5"
+  },
+  "keywords": [
+    "datetime",
+    "date",
+    "time",
+    "picker",
+    "vanilla-js",
+    "widget",
+    "no-deps"
+  ]
+}

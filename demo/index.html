@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Vanilla DateTime Picker – IIFE demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- External CSS (CSP-friendly) -->
+  <link rel="stylesheet" href="../dist/style.css"/>
+  <link rel="stylesheet" href="./demo.css"/>
+</head>
+<body>
+<main class="container">
+  <h1>Vanilla DateTime Picker – IIFE build</h1>
+
+  <section class="card">
+    <h2>Basic usage</h2>
+    <div class="field">
+      <label for="dt-1">Start</label>
+      <div class="field-inline">
+        <input id="dt-1" type="text" placeholder="YYYY-MM-DD HH:mm"/>
+        <button id="clear-1" type="button" class="btn">Clear</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="dt-2">End</label>
+      <div class="field-inline">
+        <input id="dt-2" type="text" placeholder="YYYY-MM-DD HH:mm"/>
+        <button id="clear-2" type="button" class="btn">Clear</button>
+      </div>
+    </div>
+
+    <div class="hint">
+      This page uses the IIFE build (global <code>DateTimePicker</code>) and the external CSS file.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Prefer native on handheld?</h2>
+    <p>
+      Toggle the checkbox to use native <code>datetime-local</code> for handheld-like devices (when supported).
+    </p>
+    <label class="checkbox">
+      <input id="native-toggle" type="checkbox"/>
+      Prefer native on handheld (when supported)
+    </label>
+  </section>
+</main>
+
+<!-- IIFE script from dist -->
+<script src="../dist/index.iife.min.js"></script>
+<script>
+  // Simple helpers
+  function supportsInputType(type) {
+    const i = document.createElement('input');
+    i.setAttribute('type', type);
+    return i.type === type;
+  }
+
+  function isHandheldLike() {
+    const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    const narrow = Math.min(window.innerWidth, window.innerHeight) < 820;
+    return coarse || narrow;
+  }
+
+  function preferNative() {
+    return document.getElementById('native-toggle').checked
+      && isHandheldLike()
+      && supportsInputType('datetime-local');
+  }
+
+  let picker1 = null;
+  let picker2 = null;
+
+  function initPickers() {
+    const el1 = document.getElementById('dt-1');
+    const el2 = document.getElementById('dt-2');
+
+    // Clean any previous state
+    if (picker1) {
+      picker1.destroy();
+      picker1 = null;
+    }
+    if (picker2) {
+      picker2.destroy();
+      picker2 = null;
+    }
+    el1.type = 'text';
+    el2.type = 'text';
+    el1.removeAttribute('step');
+    el2.removeAttribute('step');
+
+    if (preferNative()) {
+      // Use native
+      [el1, el2].forEach((el) => {
+        el.type = 'datetime-local';
+        el.step = '60'; // 1-minute steps
+        if (el.value && el.value.includes(' ')) {
+          el.value = el.value.replace(' ', 'T');
+        }
+      });
+      return;
+    }
+
+    // Use custom picker (global from IIFE)
+    picker1 = new DateTimePicker('#dt-1', {
+      minuteStep: 5,
+      showTimeHeaders: true,
+      hourMin: 7,
+      hourMax: 18
+    });
+    picker2 = new DateTimePicker('#dt-2', {
+      minuteStep: 5,
+      showTimeHeaders: true,
+      hourMin: 7,
+      hourMax: 18
+    });
+  }
+
+  // Clear buttons
+  document.getElementById('clear-1').addEventListener('click', function () {
+    const el = document.getElementById('dt-1');
+    if (el.type === 'datetime-local') {
+      el.value = '';
+    } else if (picker1) {
+      picker1.instances[0].clear();
+    } else {
+      el.value = '';
+    }
+  });
+  document.getElementById('clear-2').addEventListener('click', function () {
+    const el = document.getElementById('dt-2');
+    if (el.type === 'datetime-local') {
+      el.value = '';
+    } else if (picker2) {
+      picker2.instances[0].clear();
+    } else {
+      el.value = '';
+    }
+  });
+
+  // Init on load
+  initPickers();
+
+  // Re-init when the toggle changes
+  document.getElementById('native-toggle').addEventListener('change', initPickers);
+
+  // Re-init on resize to update handheld heuristic (optional)
+  window.addEventListener('resize', function () {
+    // Throttle for demo brevity
+    clearTimeout(window.__demoRaf);
+    window.__demoRaf = setTimeout(initPickers, 150);
+  });
+</script>
+</body>
+</html>

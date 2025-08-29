@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Vanilla DateTime Picker – ESM demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- External CSS (CSP-friendly) -->
+  <link rel="stylesheet" href="../dist/style.css"/>
+  <link rel="stylesheet" href="./demo.css"/>
+</head>
+<body>
+<main class="container">
+  <h1>Vanilla DateTime Picker – ESM build</h1>
+
+  <section class="card">
+    <h2>Basic usage (ESM import)</h2>
+    <div class="field">
+      <label for="dt-esm">Pick a date & time</label>
+      <div class="field-inline">
+        <input id="dt-esm" type="text" placeholder="YYYY-MM-DD HH:mm"/>
+        <button id="clear-esm" type="button" class="btn">Clear</button>
+      </div>
+    </div>
+
+    <div class="hint">
+      This page imports the ESM bundle and the external CSS file.
+    </div>
+  </section>
+</main>
+
+<script type="module">
+  import DateTimePicker from '../dist/index.esm.js';
+
+  const picker = new DateTimePicker('#dt-esm', {
+    minuteStep: 5,
+    showTimeHeaders: true,
+    hourLabel: 'Hours',
+    minuteLabel: 'Minutes',
+    highlightToday: true,
+    hourMin: 7,
+    hourMax: 18
+  });
+
+  document.getElementById('clear-esm').addEventListener('click', () => {
+    picker.instances[0].clear();
+  });
+</script>
+</body>
+</html>
