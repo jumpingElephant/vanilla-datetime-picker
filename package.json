@@ -31,8 +31,8 @@
     }
   },
   "module": "dist/index.esm.js",
-  "unpkg": "dist/index.iife.min.js",
-  "jsdelivr": "dist/index.iife.min.js",
+  "unpkg": "dist/vanilla-datetime-picker.iife.min.js",
+  "jsdelivr": "dist/vanilla-datetime-picker.iife.min.js",
   "files": [
     "dist"
   ],

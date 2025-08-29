@@ -1,40 +1,39 @@
-import { build } from "esbuild";
+import {build} from "esbuild";
 import fs from "node:fs";
 import path from "node:path";
 
 const dist = path.resolve("dist");
-if (fs.existsSync(dist)) fs.rmSync(dist, { recursive: true, force: true });
-fs.mkdirSync(dist, { recursive: true });
+if (fs.existsSync(dist)) fs.rmSync(dist, {recursive: true, force: true});
+fs.mkdirSync(dist, {recursive: true});
 
 // Copy external CSS if present
 if (fs.existsSync("src/style.css")) {
-    fs.copyFileSync("src/style.css", path.join(dist, "style.css"));
+  fs.copyFileSync("src/style.css", path.join(dist, "style.css"));
 }
 
 // 1) ESM build (no auto-injected CSS)
 await build({
-    entryPoints: ["src/index.js"],
-    outfile: "dist/index.esm.js",
-    bundle: true,
-    format: "esm",
-    sourcemap: true,
+  entryPoints: ["src/index.js"],
+  outfile: "dist/index.esm.js",
+  bundle: true,
+  format: "esm",
+  sourcemap: true,
   minify: false,
   target: ["es2019"]
 });
 
 // 2) IIFE minified build (no auto-injected CSS)
 await build({
-    entryPoints: ["src/index.js"],
-    outfile: "dist/index.iife.min.js",
-    bundle: true,
-    format: "iife",
-    globalName: "DateTimePicker",
-    sourcemap: false,
+  entryPoints: ["src/index.js"],
+  outfile: "dist/index.iife.min.js",
+  bundle: true,
+  format: "iife",
+  globalName: "DateTimePicker",
+  sourcemap: false,
   minify: true,
-    target: ["es2019"],
-    footer: {
-      js: `
-      // Ensure global DateTimePicker is the constructor (not a namespace)
+  target: ["es2019"],
+  footer: {
+    js: `
       (function (g) {
         var ns = g.DateTimePicker;
         if (ns && (ns.default || ns.DateTimePicker)) {
@@ -42,31 +41,31 @@ await build({
         }
       })(typeof window !== 'undefined' ? window : globalThis);
       `
-    }
+  }
 });
 
-// // 3) Optional “with CSS” variants (auto-injected CSS)
-// if (fs.existsSync("src/index-inject.js")) {
-//     await build({
-//         entryPoints: ["src/index-inject.js"],
-//         outfile: "dist/index.with-css.esm.js",
-//         bundle: true,
-//         format: "esm",
-//         sourcemap: true,
-//     minify: false,
-//     target: ["es2019"]
-//     });
-//
-//     await build({
-//         entryPoints: ["src/index-inject.js"],
-//         outfile: "dist/index.with-css.iife.min.js",
-//         bundle: true,
-//         format: "iife",
-//         globalName: "DateTimePicker",
-//         sourcemap: false,
-//     minify: true,
-//     target: ["es2019"]
-//     });
+// Create descriptive aliases without breaking existing paths
+const aliasMap = [
+  ["index.esm.js", "vanilla-datetime-picker.esm.js"],
+  ["index.iife.min.js", "vanilla-datetime-picker.iife.min.js"],
+  ["style.css", "vanilla-datetime-picker.css"],
+];
+
+for (const [from, to] of aliasMap) {
+  const src = path.join(dist, from);
+  const dst = path.join(dist, to);
+  if (fs.existsSync(src)) fs.copyFileSync(src, dst);
+}
+
+// Optional: if you also build `with-css` variants, alias those too
+// const withCssAliases = [
+//   ["index.with-css.esm.js", "vanilla-datetime-picker.with-css.esm.js"],
+//   ["index.with-css.iife.min.js", "vanilla-datetime-picker.with-css.iife.min.js"],
+// ];
+// for (const [from, to] of withCssAliases) {
+//   const src = path.join(dist, from);
+//   const dst = path.join(dist, to);
+//   if (fs.existsSync(src)) fs.copyFileSync(src, dst);
 // }
 
-console.log("Build complete.");
+console.log("Build complete with descriptive aliases.");
