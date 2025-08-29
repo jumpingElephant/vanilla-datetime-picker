@@ -21,6 +21,14 @@ Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds. Includes 
 - `npm run dev:esm` or `npm run dev:iife`
 - `npm run lint`
 
+## Release
+
+- `npm ci`
+- `npm run lint`
+- `npm run build`
+- perform sanity checks
+- `npm version patch` or `npm version minor` or `npm version major`
+
 ## License
 
 MIT
