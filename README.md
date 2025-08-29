@@ -12,7 +12,6 @@ Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds. Includes 
 - `dist/index.esm.js` — ESM module
 - `dist/index.iife.min.js` — IIFE (global `DateTimePicker`)
 - `dist/style.css` — external stylesheet
-- `dist/index.with-css.*` — optional auto-injected CSS variants
 
 ## Development
 
@@ -30,6 +29,13 @@ Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds. Includes 
 - `npm version patch` or `npm version minor` or `npm version major`
 - `git push`
 - `git push --follow-tags`
+
+## TODOs
+
+- [ ] Explain usage in README
+- [ ] Add more examples
+- [ ] Calendar grid highlights previous and current month days
+- [ ] Add tests
 
 ## License
 
