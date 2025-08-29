@@ -45,9 +45,9 @@
     "release:tag": "git tag v$npm_package_version && git push --tags"
   },
   "devDependencies": {
-    "esbuild": "^0.23.0",
+    "esbuild": "^0.25.9",
     "eslint": "^9.10.0",
-    "rimraf": "^5.0.5"
+    "rimraf": "^6.0.1"
   },
   "keywords": [
     "datetime",
