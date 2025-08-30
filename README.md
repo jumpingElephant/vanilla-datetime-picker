@@ -17,14 +17,13 @@ Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds. Includes 
 
 - `npm ci`
 - `npm run build`
-- `npm run dev:esm` or `npm run dev:iife`
 - `npm run lint`
+- `npm run dev:esm` or `npm run dev:iife`
+- `python -m http.server`
 
 ## Release
 
-- `npm ci`
-- `npm run lint`
-- `npm run build`
+- `npm run audit`
 - perform sanity checks
 - `npm version patch` or `npm version minor` or `npm version major`
 - `git push`

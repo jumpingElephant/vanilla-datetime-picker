@@ -42,7 +42,8 @@
     "dev:esm": "esbuild src/index.js --bundle --format=esm --outfile=dist/index.esm.js --sourcemap --watch",
     "dev:iife": "esbuild src/index.js --bundle --format=iife --global-name=DateTimePicker --outfile=dist/index.iife.js --sourcemap --watch",
     "lint": "eslint src",
-    "release:tag": "git tag v$npm_package_version && git push --tags"
+    "release:tag": "git tag v$npm_package_version && git push --tags",
+    "audit": "npm run clean && npm ci && npm run build && npm run lint"
   },
   "devDependencies": {
     "esbuild": "0.25.9",
