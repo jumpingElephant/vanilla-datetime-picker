@@ -1,6 +1,7 @@
 # Vanilla DateTime Picker
 
-Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds. Includes an external CSS file (CSP-friendly) and an optional “with CSS” variant that injects styles at runtime.
+Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds. Includes an external CSS file (CSP-friendly) and
+an optional “with CSS” variant that injects styles at runtime.
 
 ## Install
 
@@ -18,14 +19,15 @@ Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds. Includes 
 - `dist/index.iife.min.js` — IIFE (global `DateTimePicker`)
 - `dist/style.css` — external stylesheet
 
-
 ## Usage
 
 - Copy the files from the release archive into your project (e.g., under ./dist or your public/assets folder).
 - Include the stylesheet.
-- Attach to one or more input[type="text"] elements. The picker opens on focus or click, and can also be opened with ArrowDown when focused.
+- Attach to one or more input[type="text"] elements. The picker opens on focus or click, and can also be opened with
+  ArrowDown when focused.
 
 ESM (module script in the browser)
+
 ```html
 <!-- Place files from the release under ./dist -->
 <link rel="stylesheet" href="./dist/style.css">
@@ -63,6 +65,7 @@ ESM (module script in the browser)
 ```
 
 ESM (bundler)
+
 ```javascript
 // Place dist files in your app’s served public folder (e.g., /public/dist)
 // Then import by URL/path as your bundler allows:
@@ -72,7 +75,9 @@ import DateTimePicker from '/dist/index.esm.js';
 ```
 
 IIFE (no bundler)
+
 ```html
+
 <link rel="stylesheet" href="./dist/style.css">
 
 <input class="datetime" type="text" placeholder="YYYY-MM-DD HH:mm">
@@ -88,10 +93,13 @@ IIFE (no bundler)
 ```
 
 Notes
+
 - Multiple elements: pass a CSS selector; one picker instance manages all matched inputs internally.
 - min/max can be Date objects or date-only strings 'YYYY-MM-DD'.
-- hourMin/hourMax constrain the visible hour list in the time column (they do not change the parsing/formatting of arbitrary input text).
-- Accessibility/UX: opens on focus/click; ArrowDown opens when focused. The panel includes Today, Now, Reset, and Clear actions.
+- hourMin/hourMax constrain the visible hour list in the time column (they do not change the parsing/formatting of
+  arbitrary input text).
+- Accessibility/UX: opens on focus/click; ArrowDown opens when focused. The panel includes Today, Now, Reset, and Clear
+  actions.
 
 ### Small programmatic API
 
@@ -125,6 +133,13 @@ picker.destroy();
 - `npm run lint`
   // ... existing code ...
 
+## E2E Tests
+
+### Setup
+
+- `npm run e2e:setup`
+- `npm run e2e`
+
 ## Release
 
 - `npm run audit`
@@ -136,8 +151,10 @@ picker.destroy();
 
 ## TODOs
 
-- [x] Explain usage in README
 - [ ] Add tests
+  - [ ] Unit tests
+  - [ ] DOM Integration tests (behavior tests)
+  - [ ] E2E tests
 - [ ] Calendar grid highlights previous and current month days
 - [ ] Keyboard navigation does not work when input is empty or invalid
 

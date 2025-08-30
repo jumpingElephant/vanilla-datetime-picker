@@ -467,6 +467,7 @@ class DateTimePicker {
         btn.type = 'button';
         btn.className = 'vdtp-day';
         btn.textContent = String(cell.date.getDate());
+        btn.role = 'gridcell';
 
         if (cell.outside) {
           btn.classList.add('vdtp-day--outside');

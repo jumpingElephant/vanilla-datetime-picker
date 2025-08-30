@@ -43,12 +43,19 @@
     "dev:iife": "esbuild src/index.js --bundle --format=iife --global-name=DateTimePicker --outfile=dist/index.iife.js --sourcemap --watch",
     "lint": "eslint src",
     "release:tag": "git tag v$npm_package_version && git push --tags",
-    "audit": "npm run clean && npm ci && npm run build && npm run lint"
+    "audit": "npm run clean && npm ci && npm run build && npm run lint",
+    "e2e:setup": "npm install -D @playwright/test -D serve -D axe-playwright && npx playwright install --with-deps",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "e2e:debug": "playwright test --project=firefox --headed --debug",
+    "e2e:report": "playwright show-report"
   },
   "devDependencies": {
+    "@playwright/test": "1.55.0",
     "esbuild": "0.25.9",
     "eslint": "^9.10.0",
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.5",
+    "serve": "14.2.4"
   },
   "keywords": [
     "datetime",
