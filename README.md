@@ -154,7 +154,6 @@ picker.destroy();
 - [ ] Add tests
   - [ ] Unit tests
   - [ ] DOM Integration tests (behavior tests)
-  - [ ] E2E tests
 - [ ] Calendar grid highlights previous and current month days
 - [ ] Keyboard navigation does not work when input is empty or invalid
 

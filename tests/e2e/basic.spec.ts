@@ -13,7 +13,7 @@ test.describe('Datetime picker - basic flows', () => {
     await expect(grid).toBeVisible();
 
     // Navigate/select a date (adapt selectors)
-    // Example: select the 15th of the visible month
+    // select the 15th of the visible month
     await page.getByRole('gridcell', {name: /^15$/}).first().click();
 
     // Verify input updated with a datetime-like value with space between date and time and day of month equals 15

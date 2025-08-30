@@ -556,6 +556,7 @@ class DateTimePicker {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'vdtp-pill';
+      btn.role = 'option'
       btn.textContent = String(h).padStart(2, '0');
       if (h === activeHour) {
         btn.setAttribute('aria-current', 'true');
@@ -602,6 +603,7 @@ class DateTimePicker {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'vdtp-pill';
+      btn.role = 'option'
       btn.textContent = String(m).padStart(2, '0');
       if (m === activeMinute) {
         btn.setAttribute('aria-current', 'true');
