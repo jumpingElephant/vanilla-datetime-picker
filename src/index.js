@@ -468,6 +468,7 @@ class DateTimePicker {
         btn.className = 'vdtp-day';
         btn.textContent = String(cell.date.getDate());
         btn.role = 'gridcell';
+        btn.setAttribute('data-date', cell.date.toISOString());
 
         if (cell.outside) {
           btn.classList.add('vdtp-day--outside');
@@ -1154,22 +1155,8 @@ class DateTimePicker {
   }
 
   _getDateFromDayButton(state, btn) {
-    const dayNum = Number(btn.textContent);
-    const isOutside = btn.classList.contains('ai-dtp-day--outside');
-    let year = state.viewDate.getFullYear();
-    let month = state.viewDate.getMonth();
-    if (isOutside) {
-      if (dayNum > 20) {
-        const prev = this._addMonths(state.viewDate, -1);
-        year = prev.getFullYear();
-        month = prev.getMonth();
-      } else {
-        const next = this._addMonths(state.viewDate, 1);
-        year = next.getFullYear();
-        month = next.getMonth();
-      }
-    }
-    return new Date(year, month, dayNum);
+    const dateIsoString = btn.getAttribute('data-date');
+    return new Date(dateIsoString);
   }
 
   _positionPopover(state, measure) {
