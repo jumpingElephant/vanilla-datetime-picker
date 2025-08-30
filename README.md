@@ -15,11 +15,10 @@ Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds. Includes 
 
 ## Development
 
-- `npm ci`
 - `npm run build`
-- `npm run lint`
 - `npm run dev:esm` or `npm run dev:iife`
 - `python -m http.server`
+- `npm run lint`
 
 ## Release
 
