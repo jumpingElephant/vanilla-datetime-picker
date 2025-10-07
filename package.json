@@ -51,7 +51,7 @@
     "e2e:report": "playwright show-report"
   },
   "devDependencies": {
-    "@playwright/test": "1.55.0",
+    "@playwright/test": "1.55.1",
     "esbuild": "0.25.9",
     "eslint": "^9.35.0",
     "rimraf": "^6.0.1",
