@@ -147,7 +147,6 @@ picker.destroy();
 - `npm version patch` or `npm version minor` or `npm version major`
 - `git push`
 - `git push --follow-tags`
-  // ... existing code ...
 
 ## TODOs
 
