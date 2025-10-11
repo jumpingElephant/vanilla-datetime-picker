@@ -50,6 +50,9 @@
     "e2e:debug": "playwright test --project=firefox --headed --debug",
     "e2e:report": "playwright show-report"
   },
+  "dependencies": {
+    "vanilla-javascript": "1.1.6"
+  },
   "devDependencies": {
     "@playwright/test": "1.55.1",
     "esbuild": "0.25.10",
