@@ -54,7 +54,7 @@
     "vanilla-javascript": "1.1.6"
   },
   "devDependencies": {
-    "@playwright/test": "1.55.1",
+    "@playwright/test": "1.56.0",
     "esbuild": "0.25.10",
     "eslint": "^9.37.0",
     "rimraf": "^6.0.1",
