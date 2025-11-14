@@ -55,8 +55,8 @@
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
-    "esbuild": "0.25.12",
-    "eslint": "^9.39.0",
+    "esbuild": "0.27.0",
+    "eslint": "^9.39.1",
     "rimraf": "^6.1.0",
     "serve": "14.2.5"
   },
