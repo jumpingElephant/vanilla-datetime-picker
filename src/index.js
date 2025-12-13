@@ -597,7 +597,8 @@ class DateTimePicker {
     const activeMinute = state.minute ?? this.options.defaultMinute;
 
     // Minutes list always shows full 0..59 by step and selected minute
-    let minuteValues = Array.from({length: 12}, (_, i) => i * step);
+    const minuteValueCount = Math.max(0, Math.floor(60 / step));
+    let minuteValues = Array.from({length: minuteValueCount}, (_, i) => i * step);
     minuteValues.push(state.minute);
     minuteValues = [...new Set(minuteValues)].sort((a, b) => a - b);
     for (const m of minuteValues) {
