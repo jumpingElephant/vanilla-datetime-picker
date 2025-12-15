@@ -129,7 +129,7 @@ picker.destroy();
 
 - `npm run build`
 - `npm run dev:esm` or `npm run dev:iife`
-- `python -m http.server --directory demo`
+- `python -m http.server`
 - `npm run lint`
 - open http://localhost:8000/demo/esm.html
 
