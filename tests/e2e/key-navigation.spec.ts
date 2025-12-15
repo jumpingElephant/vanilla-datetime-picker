@@ -1,6 +1,6 @@
 import {expect, test} from '@playwright/test';
 
-test.describe('Datetime picker - basic flows', () => {
+test.describe('Datetime picker - key navigation flows', () => {
   test('open, navigate with keys in day grid, and close', async ({page}) => {
     // Set a fixed time for the test
     // Chose a date where navigation to previous month is short, and 31st of previous month is the only visible gridcell with this number
