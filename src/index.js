@@ -581,6 +581,7 @@ class DateTimePicker {
         this._applyToInput(state);
         this._renderHours(state);
         this._renderDays(state);
+        this._focusSelectedHour(state);
       });
       wrap.appendChild(btn);
     }
@@ -629,6 +630,7 @@ class DateTimePicker {
         this._applyToInput(state);
         this._renderMinutes(state);
         this._renderDays(state);
+        this._focusSelectedMinute(state);
       });
       wrap.appendChild(btn);
     }
