@@ -36,7 +36,7 @@ jobs:
 
       - name: Upload Playwright report
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: playwright-report
           path: playwright-report
@@ -44,7 +44,7 @@ jobs:
 
       - name: Upload test results (traces, screenshots, videos)
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: test-results
           path: test-results
