@@ -157,9 +157,13 @@ class DateTimePicker {
       if (e.target === input) {
         // If input is currently empty, also apply it now
         if (!state.input.value) {
-          state.selected = new Date(state.initial);
+          if (state.input.value === '' && state.selected) {
+            state.selected = new Date(state.initial);
+          }
         }
-        input.value = this.options.format(state.selected);
+        if (input.value) {
+          input.value = this.options.format(state.selected);
+        }
         if (state.inputFieldFocused) {
           state.inputFieldFocused = false;
           this.close(state);
@@ -171,6 +175,11 @@ class DateTimePicker {
       if (e.key === 'ArrowDown' && !state.open) {
         e.preventDefault();
         this.open(state);
+      }
+    });
+    input.addEventListener('input', (e) => {
+      if (e.target.value === '') {
+        state.selected = null;
       }
     });
 
@@ -700,9 +709,13 @@ class DateTimePicker {
 
   _focusSelectedDay(state) {
     const selectedBtn = state.popover.querySelector('.vdtp-day[aria-selected="true"]');
+    if (!selectedBtn) {
+      state.inputFieldFocused = false;
+      this._findDayButton(state, new Date()).focus({preventScroll: true});
+      return;
+    }
     if (selectedBtn && !state.inputFieldFocused) {
       selectedBtn.focus({preventScroll: true});
-      state.focusDate = this._getDateFromDayButton(state, selectedBtn);
       return;
     }
     const first = state.popover.querySelector('.vdtp-day:not(.vdtp-day--outside):not([disabled])');
