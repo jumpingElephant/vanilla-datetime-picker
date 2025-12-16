@@ -153,7 +153,6 @@ picker.destroy();
 - [ ] Add tests
   - [ ] Unit tests
   - [ ] DOM Integration tests (behavior tests)
-- [ ] Focussed element should have better contrast to the background
 - [ ] Improve README
   - [ ] Describe behavior
   - [ ] Update and Describe options
