@@ -22,7 +22,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          VERSION="${GITHUB_REF_NAME}" # e.g., v0.1.3
+          VERSION="${GITHUB_REF_NAME}"
           cp dist/index.esm.js "dist/vanilla-js-datetime-picker-${VERSION}.esm.js"
           cp dist/index.iife.min.js "dist/vanilla-js-datetime-picker-${VERSION}.iife.min.js"
           cp dist/style.css "dist/vanilla-js-datetime-picker-${VERSION}.css"
@@ -37,19 +37,3 @@ jobs:
             dist/vanilla-js-datetime-picker-${{ github.ref_name }}.css
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-#    # Optional npm publish on tagged release:
-#    publish:
-#        needs: build-and-release
-#        runs-on: ubuntu-latest
-#        steps:
-#            -   uses: actions/checkout@v4
-#            -   uses: actions/setup-node@v6
-#                with:
-#                    node-version: '20'
-#                    registry-url: 'https://registry.npmjs.org'
-#            -   run: npm ci
-#            -   run: npm run build
-#            -   run: npm publish --access public
-#                env:
-#                    NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
