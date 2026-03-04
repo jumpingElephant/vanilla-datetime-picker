@@ -57,15 +57,4 @@ for (const [from, to] of aliasMap) {
   if (fs.existsSync(src)) fs.copyFileSync(src, dst);
 }
 
-// Optional: if you also build `with-css` variants, alias those too
-// const withCssAliases = [
-//   ["index.with-css.esm.js", "vanilla-datetime-picker.with-css.esm.js"],
-//   ["index.with-css.iife.min.js", "vanilla-datetime-picker.with-css.iife.min.js"],
-// ];
-// for (const [from, to] of withCssAliases) {
-//   const src = path.join(dist, from);
-//   const dst = path.join(dist, to);
-//   if (fs.existsSync(src)) fs.copyFileSync(src, dst);
-// }
-
 console.log("Build complete with descriptive aliases.");

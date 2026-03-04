@@ -1,4 +1,3 @@
-// eslint.config.js
 import js from "@eslint/js";
 
 export default [
@@ -64,7 +63,7 @@ export default [
     },
   },
 
-  // Repo root scripts (optional): treat as Node too
+  // Repo root scripts
   {
     files: ["*.{js,mjs}"],
     languageOptions: {
