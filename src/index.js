@@ -113,6 +113,10 @@ class DateTimePicker {
       onKeydown: null,
       measured: false,
 
+      // number tracking
+      typedHour: '',
+      typedMinute: '',
+
       // prevent instant re-open when input regains focus (e.g., after Esc)
       suppressOpenUntil: 0,
     };
@@ -297,6 +301,7 @@ class DateTimePicker {
     window.removeEventListener('resize', state.onResize);
     state.onDocClick = state.onScroll = state.onResize = state.onKeydown = null;
     state.measured = false;
+    this._clearNumberInput(state);
 
     // Note: we intentionally DO NOT move focus back to the input here to avoid reopening
   }
@@ -567,6 +572,7 @@ class DateTimePicker {
       btn.type = 'button';
       btn.className = 'vdtp-pill';
       btn.role = 'option'
+      btn.component = 'hour'
       btn.textContent = String(h).padStart(2, '0');
       if (h === activeHour) {
         btn.setAttribute('aria-current', 'true');
@@ -592,6 +598,12 @@ class DateTimePicker {
         this._renderDays(state);
         this._focusSelectedHour(state);
       });
+      btn.addEventListener('focusout', (e) => {
+        // forget about the key input state if focus leaves the hour column
+        if (e.relatedTarget && (e.relatedTarget.component !== 'hour')) {
+          this._clearNumberInput(state);
+        }
+      })
       wrap.appendChild(btn);
     }
 
@@ -616,6 +628,7 @@ class DateTimePicker {
       btn.type = 'button';
       btn.className = 'vdtp-pill';
       btn.role = 'option'
+      btn.component = 'minute'
       btn.textContent = String(m).padStart(2, '0');
       if (m === activeMinute) {
         btn.setAttribute('aria-current', 'true');
@@ -641,6 +654,12 @@ class DateTimePicker {
         this._renderDays(state);
         this._focusSelectedMinute(state);
       });
+      btn.addEventListener('focusout', (e) => {
+        // forget about the key input state if focus leaves the minute column
+        if (e.relatedTarget && (e.relatedTarget.component !== 'minute')) {
+          this._clearNumberInput(state);
+        }
+      })
       wrap.appendChild(btn);
     }
 
@@ -861,8 +880,8 @@ class DateTimePicker {
         e.preventDefault();
         const delta = (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === '-') ? -1 : 1;
         this._changeHourBy(state, delta);
-        // keep focus on the current hour button after change
         this._focusSelectedHour(state);
+        this._clearNumberInput(state);
         return;
       }
       if (e.key === 'Home') {
@@ -870,12 +889,25 @@ class DateTimePicker {
         const hMin = clampHour(this.options.hourMin);
         this._setHour(state, state.hour > hMin ? hMin : 0);
         this._focusSelectedHour(state);
+        this._clearNumberInput(state);
         return;
       }
       if (e.key === 'End') {
         e.preventDefault();
         const hMax = clampHour(this.options.hourMax);
         this._setHour(state, state.hour < hMax ? hMax : 23);
+        this._focusSelectedHour(state);
+        this._clearNumberInput(state);
+        return;
+      }
+      if (e.key in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]) {
+        e.preventDefault();
+        let h = parseInt(state.typedHour + e.key);
+        if (h > 23) {
+          h = parseInt(e.key);
+        }
+        state.typedHour = (String(h));
+        this._setHour(state, h);
         this._focusSelectedHour(state);
         return;
       }
@@ -904,20 +936,33 @@ class DateTimePicker {
             break;
         }
         this._changeMinuteBy(state, delta);
-        // keep focus on the current minute button after change
         this._focusSelectedMinute(state);
+        this._clearNumberInput(state);
         return;
       }
       if (e.key === 'Home') {
         e.preventDefault();
         this._setMinute(state, 0);
         this._focusSelectedMinute(state);
+        this._clearNumberInput(state);
         return;
       }
       if (e.key === 'End') {
         e.preventDefault();
         const step = Math.max(1, Number(this.options.minuteStep) || 5);
         this._setMinute(state, 60 - step);
+        this._focusSelectedMinute(state);
+        this._clearNumberInput(state);
+        return;
+      }
+      if (e.key in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]) {
+        e.preventDefault();
+        let m = parseInt(state.typedMinute + e.key);
+        if (m > 59) {
+          m = parseInt(e.key);
+        }
+        state.typedMinute = (String(m));
+        this._setMinute(state, m);
         this._focusSelectedMinute(state);
         return;
       }
@@ -1026,6 +1071,11 @@ class DateTimePicker {
     }
 
     // Otherwise, allow default behavior (e.g., scrolling the lists)
+  }
+
+  _clearNumberInput(state) {
+    state.typedHour = '';
+    state.typedMinute = '';
   }
 
   closeAndGiveFocusToInput(e, state) {
