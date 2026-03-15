@@ -1,7 +1,7 @@
 import {expect, test} from '@playwright/test';
 
-test.describe('Datetime picker - mouse selection flows', () => {
-  test('open, edit text, then close', async ({page}) => {
+test.describe('Datetime picker - text input editing', () => {
+  test('open, clear text input, then close', async ({page}) => {
     // Set a fixed time for the test
     await page.clock.setFixedTime(new Date('2025-11-08T11:55:30'));
     await page.goto('/demo/index.html');

@@ -202,6 +202,13 @@
   text-align: center;
 }
 
+/* Display typed number in header */
+.vdtp-colheader[data-typed-display]:not([data-typed-display=""])::after {
+  content: " (" attr(data-typed-display) ")";
+  font-weight: 600;
+  color: var(--vdtp-primary, #2563eb);
+}
+
 /* Make the list continuous and fully clickable, no gaps */
 .vdtp-col {
   display: block;

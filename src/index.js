@@ -383,7 +383,9 @@ class DateTimePicker {
     const mh = pop.querySelector('[data-ref="minutes-header"]');
     if (this.options.showTimeHeaders) {
       hh.textContent = this.options.hourLabel;
+      hh.setAttribute('data-typed-display', '');
       mh.textContent = this.options.minuteLabel;
+      mh.setAttribute('data-typed-display', '');
       hh.style.display = '';
       mh.style.display = '';
     } else {
@@ -602,9 +604,23 @@ class DateTimePicker {
         // forget about the key input state if focus leaves the hour column
         if (e.relatedTarget && (e.relatedTarget.component !== 'hour')) {
           this._clearNumberInput(state);
+
         }
       })
       wrap.appendChild(btn);
+    }
+
+    // Update header with typed value if present
+    if (state.typedHour) {
+      const header = state.popover.querySelector('[data-ref="hours-header"]');
+      if (header) {
+        header.setAttribute('data-typed-display', state.typedHour);
+      }
+    } else {
+      const header = state.popover.querySelector('[data-ref="hours-header"]');
+      if (header) {
+        header.setAttribute('data-typed-display', '');
+      }
     }
 
     // Ensure the selected hour pill is visible even without focus
@@ -661,6 +677,19 @@ class DateTimePicker {
         }
       })
       wrap.appendChild(btn);
+    }
+
+    // Update header with typed value if present
+    if (state.typedMinute) {
+      const header = state.popover.querySelector('[data-ref="minutes-header"]');
+      if (header) {
+        header.setAttribute('data-typed-display', state.typedMinute);
+      }
+    } else {
+      const header = state.popover.querySelector('[data-ref="minutes-header"]');
+      if (header) {
+        header.setAttribute('data-typed-display', '');
+      }
     }
 
     // Ensure the selected minute pill is visible even without focus
@@ -907,6 +936,11 @@ class DateTimePicker {
           h = parseInt(e.key);
         }
         state.typedHour = (String(h));
+        // Update header display immediately
+        const hourHeader = state.popover.querySelector('[data-ref="hours-header"]');
+        if (hourHeader) {
+          hourHeader.setAttribute('data-typed-display', state.typedHour);
+        }
         this._setHour(state, h);
         this._focusSelectedHour(state);
         return;
@@ -962,6 +996,11 @@ class DateTimePicker {
           m = parseInt(e.key);
         }
         state.typedMinute = (String(m));
+        // Update header display immediately
+        const minuteHeader = state.popover.querySelector('[data-ref="minutes-header"]');
+        if (minuteHeader) {
+          minuteHeader.setAttribute('data-typed-display', state.typedMinute);
+        }
         this._setMinute(state, m);
         this._focusSelectedMinute(state);
         return;
@@ -1076,6 +1115,17 @@ class DateTimePicker {
   _clearNumberInput(state) {
     state.typedHour = '';
     state.typedMinute = '';
+    // Clear the display without re-rendering
+    if (state.popover) {
+      const hourHeader = state.popover.querySelector('[data-ref="hours-header"]');
+      const minuteHeader = state.popover.querySelector('[data-ref="minutes-header"]');
+      if (hourHeader) {
+        hourHeader.setAttribute('data-typed-display', '');
+      }
+      if (minuteHeader) {
+        minuteHeader.setAttribute('data-typed-display', '');
+      }
+    }
   }
 
   closeAndGiveFocusToInput(e, state) {
