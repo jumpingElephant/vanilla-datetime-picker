@@ -1,6 +1,6 @@
 {
   "name": "vanilla-datetime-picker",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Zero-dependency, vanilla JS date-time picker with ESM and IIFE builds.",
   "license": "MIT",
   "author": "",
