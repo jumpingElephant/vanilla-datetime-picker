@@ -252,8 +252,8 @@ class DateTimePicker {
     state.open = true;
 
     this._buildPopover(state);
-    this._render(state);
     this._positionPopover(state, true); // measure once on open
+    this._render(state);
 
     state.onDocClick = (e) => {
       if (!state.popover) {
